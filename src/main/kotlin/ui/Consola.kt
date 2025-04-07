@@ -1,49 +1,81 @@
 package org.example.ui
 
 import org.example.modelo.Calculadora
+import org.example.modelo.TipoOperacion
 import java.util.Scanner
 
-class Consola(private val calculadora : Calculadora) {
+class Consola(private val calculadora: Calculadora) {
+
     private var sc = Scanner(System.`in`)
 
     fun pedirNumero(): Int {
-        var respuesta : String
+        var respuesta: String
 
-        do{
+        do {
             mostrar("Introduce un numero: ")
             respuesta = sc.nextLine()
 
-            if(respuesta.toIntOrNull() == null){
-                mostrar("Porfavor,introduce un numero")
+            if (respuesta.toIntOrNull() == null) {
+                mostrar("Por favor, introduce un numero valido")
             }
-        }while(respuesta.toIntOrNull() != null)
+        } while (respuesta.toIntOrNull() == null)
 
         return respuesta.toInt()
     }
 
-    fun pedirOperacion(): Int {
-        var respuesta : String
+    fun pedirOperacion(): TipoOperacion {
+        var respuesta: String
+        var tipo: TipoOperacion
 
-        do{
-            mostrar("Introduce la operacion que desea realizar ('+','-','*','/') ")
-            respuesta = sc.next()
+        do {
+            mostrar("Introduce la operacion que desea realizar ('+','-','*','/'): ")
+            respuesta = sc.nextLine()
+            tipo = TipoOperacion.getOperacion(respuesta)
 
-            if(respuesta.toIntOrNull() == null){
-                mostrar("Porfavor,introduce un numero")
+            if (tipo == TipoOperacion.NINGUNO) {
+                mostrar("Por favor, introduce una operación valida")
+            } else {
+                calculadora.tipoOperacion = tipo
             }
-        }while(respuesta.toIntOrNull() != null)
+        } while (tipo == TipoOperacion.NINGUNO)
 
-        return respuesta.toInt()
+        return tipo
     }
 
-    fun mostrar(mensaje : String){
+    fun deseaSalir(): Boolean {
+        var respuesta: String
+
+        do {
+            mostrar("¿Deseas salir? (s/n): ")
+            respuesta = sc.nextLine().trim().lowercase()
+
+            if (respuesta !in listOf("s", "n")) {
+                mostrar("Por favor, responde con 's' o 'n'")
+            }
+        } while (respuesta !in listOf("s", "n"))
+
+        return respuesta == "s"
+    }
+
+    fun mostrar(mensaje: String) {
         println(mensaje)
     }
 
-    fun menu(){
-        mostrar("Calculadora")
+    fun menu() {
+        do {
+            mostrar("----------Calculadora-----------")
+            mostrar("Primer numero: ")
+            val numero1 = pedirNumero()
+            mostrar("Segundo numero: ")
+            val numero2 = pedirNumero()
+            val operacion = pedirOperacion()
+            val resultado = calculadora.hacerOperacion(numero1, numero2, operacion)
 
+            if (resultado == null) {
+                mostrar("No se ha podido realizar la operacion")
+            } else {
+                mostrar("$resultado")
+            }
+        } while (!deseaSalir())
     }
-
-
 }

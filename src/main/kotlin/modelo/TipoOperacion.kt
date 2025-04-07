@@ -1,7 +1,7 @@
 package org.example.modelo
 
 enum class TipoOperacion {
-    SUMA,RESTA,MULTIPLICACION,DIVISION;
+    SUMA,RESTA,MULTIPLICACION,DIVISION,NINGUNO;
 
     companion object {
         fun getOperacion(operacion : String) : TipoOperacion{
@@ -9,7 +9,8 @@ enum class TipoOperacion {
                 "-" -> TipoOperacion.RESTA
                 "/" -> TipoOperacion.DIVISION
                 "*" -> TipoOperacion.MULTIPLICACION
-                else -> TipoOperacion.SUMA
+                "+"-> TipoOperacion.SUMA
+                else -> TipoOperacion.NINGUNO
             }
         }
     }

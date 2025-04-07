@@ -1,7 +1,7 @@
 package org.example.modelo
 
 class Calculadora : Operaciones {
-     private var tipoOperacion = TipoOperacion.MULTIPLICACION
+    var tipoOperacion = TipoOperacion.MULTIPLICACION
 
     fun hacerOperacion(primerNumero : Int,segundoNumero : Int,operacion : TipoOperacion): Int? {
         return when(operacion){
@@ -9,6 +9,7 @@ class Calculadora : Operaciones {
             TipoOperacion.DIVISION -> dividir(primerNumero,segundoNumero)
             TipoOperacion.SUMA -> sumar(primerNumero,segundoNumero)
             TipoOperacion.MULTIPLICACION -> multiplicar(primerNumero,segundoNumero)
+            TipoOperacion.NINGUNO -> null
         }
     }
 
