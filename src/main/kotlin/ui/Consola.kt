@@ -64,9 +64,7 @@ class Consola(private val calculadora: Calculadora) {
     fun menu() {
         do {
             mostrar("----------Calculadora-----------")
-            mostrar("Primer numero: ")
             val numero1 = pedirNumero()
-            mostrar("Segundo numero: ")
             val numero2 = pedirNumero()
             val operacion = pedirOperacion()
             val resultado = calculadora.hacerOperacion(numero1, numero2, operacion)
